@@ -4,7 +4,7 @@ logo_url: /logo.svg
 
 backend:
     name: "github"
-    repo: JasonYHZ/astros
+    repo: jasonyhz/astros
     branch: main
     base_url: https://astros-olive.vercel.app
     automatic_deployments: false
