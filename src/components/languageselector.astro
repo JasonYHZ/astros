@@ -1,19 +1,62 @@
 ---
-import { LanguageSelector } from "astro-i18next/components";
+import { localizePath } from "astro-i18next";
 import { Icon } from "astro-icon";
+import i18next from "i18next";
 
+const currentLanguage = i18next.language;
+const { pathname } = Astro.url;
 const { icon = "", languageMapping = { en: "English", it: "Italiano" }, ...rest } = Astro.props;
 ---
 
 <div
-	class="flex items-center pl-2 rounded-md text-sm font-semibold text-center transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border outline-2 outline-offset-2 border-gray-300 text-gray-700 hover:border-gray-400 active:bg-gray-100 dark:active:bg-stone-950"
-	aria-label="Language selection">
-	<Icon name="ion:language" class="w-5 dark:text-white" />
-	<label for="language-selector" class="sr-only">Choose a language</label>
-	<LanguageSelector
-		showFlag={false}
-		languageMapping={languageMapping}
-		class="appearance-none cursor-pointer pl-3 pr-2 py-1.5 rounded-md dark:bg-stone-950 dark:text-white focus-visible:outline-none"
-		aria-label="Choose a language"
-	/>
+	x-data="{
+            open: false,
+            toggle() {
+                if (this.open) {
+                    return this.close()
+                }
+                this.$refs.button.focus()
+                this.open = true
+            },
+            close(focusAfter) {
+                if (! this.open) return
+                this.open = false
+                focusAfter && focusAfter.focus()
+            }
+        }"
+	x-on:keydown.escape.prevent.stop="close($refs.button)"
+	x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+	x-id="['dropdown-button']"
+	class="relative">
+	<!-- Button -->
+	<button
+		x-ref="button"
+		x-on:click="toggle()"
+		:aria-expanded="open"
+		:aria-controls="$id('dropdown-button')"
+		type="button"
+		class="group rounded-full bg-gradient-to-b from-zinc-50/50 to-white/90 px-3 py-2 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur transition dark:from-zinc-900/50 dark:to-zinc-800/90 dark:ring-white/10 dark:hover:ring-white/20">
+		<Icon name="fluent:translate-20-filled" class="w-5 dark:text-white" />
+	</button>
+
+	<!-- Panel -->
+	<div
+		x-ref="panel"
+		x-show="open"
+		x-transition.origin.top.left
+		x-on:click.outside="close($refs.button)"
+		:id="$id('dropdown-button')"
+		style="display: none;"
+		class="absolute left-0 mt-2 w-auto rounded-md bg-transparent bg-gradient-to-b from-zinc-50/50 to-white/90 px-3 py-2 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur transition dark:from-zinc-900/50 dark:to-zinc-800/90 dark:ring-white/10 dark:hover:ring-white/20">
+		<a
+			href={localizePath(pathname, "en")}
+			class="flex items-center gap-2 w-full transition first-of-type:rounded-t-md last-of-type:rounded-b-md px-4 py-2.5 text-left text-sm hover:text-lime-600 dark:hover:text-lime-400 dark:text-white">
+			<span>{currentLanguage === "en" ? "English✓" : "English"}</span>
+		</a>
+		<a
+			href={localizePath(pathname, "it")}
+			class="flex items-center gap-2 w-full transition first-of-type:rounded-t-md last-of-type:rounded-b-md px-4 py-2.5 text-left text-sm hover:text-lime-600 dark:hover:text-lime-400 dark:text-white">
+			<span>{currentLanguage === "it" ? "Italiano✓" : "Italiano"}</span>
+		</a>
+	</div>
 </div>

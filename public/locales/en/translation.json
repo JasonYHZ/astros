@@ -10,6 +10,7 @@
 		"secondary_button_text": "Go to base version"
 	},
 	"header": {
+		"home": "Home",
 		"features": "Features",
 		"pricing": "Pricing",
 		"blog": "Blog",

@@ -1,8 +1,6 @@
 ---
 import logo from "assets/logo.svg";
 import { localizePath } from "astro-i18next";
-import LanguageSelector from "@components/languageselector.astro";
-import ThemeSelector from "@components/themeselector.astro";
 import { menuitems } from "@components/navbar/navbar.astro";
 import { t } from "i18next";
 ---
@@ -30,7 +28,7 @@ import { t } from "i18next";
 									{t(item.title)}
 								</a>
 							</li>
-						)
+						),
 				)
 			}
 		</ul>
@@ -56,14 +54,6 @@ import { t } from "i18next";
 					</path>
 				</svg>
 			</a>
-		</div>
-		<div class="flex justify-center mt-12 gap-3">
-			<LanguageSelector
-				showFlag={false}
-				languageMapping={{ en: "English", it: "Italiano" }}
-				class="appearance-none py-1 px-2 rounded bg-slate-100 dark:bg-stone-950"
-			/>
-			<ThemeSelector />
 		</div>
 		<div class="mt-4 text-center">
 			<span class="text-sm tracking-wide text-gray-500 dark:text-white">Copyright © Your Company 2023 - Present. All rights reserved</span>

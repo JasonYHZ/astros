@@ -3,39 +3,56 @@ import { Icon } from "astro-icon";
 ---
 
 <div
-	class="flex items-center pl-2 rounded-md text-sm font-semibold text-center transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border outline-2 outline-offset-2 border-gray-300 text-gray-700 hover:border-gray-400 active:bg-gray-100 dark:active:bg-stone-950"
-	aria-label="Theme selection">
-	<Icon name="fluent:dark-theme-20-filled" class="w-5 dark:text-white" />
-	<label for="theme-selector" class="sr-only">Choose a theme</label>
-	<select
-		x-data="{
-				theme: localStorage.theme || 'system',
-				updateDocumentClassTheme: function() {
-					if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-						document.documentElement.classList.add('dark');
-					} else {
-						document.documentElement.classList.remove('dark');
-					}
-				},
-				switchTheme: function (newValue) {
-					if (newValue == 'dark') {
-						localStorage.theme = 'dark';
-					} else if (newValue == 'light') {
-						localStorage.theme = 'light';
-					} else {
-						localStorage.removeItem('theme');
-					}
-					this.updateDocumentClassTheme();
-				},
-			}"
-		name="theme-selector"
-		id="theme-selector"
-		class="appearance-none cursor-pointer rounded-md pl-3 pr-2 py-1.5 dark:bg-stone-950 dark:text-white focus-visible:outline-none"
-		x-model="theme"
-		aria-label="Choose a theme"
-		@change="switchTheme($event.target.value)">
-		<option value="system">System</option>
-		<option value="dark">Dark</option>
-		<option value="light">Light</option>
-	</select>
+	class="relative"
+	x-init="$nextTick(() => { open = true; })"
+	x-data={`
+	{
+		open: false,
+		theme: localStorage.theme || 'system',
+		updateDocumentClassTheme: function() {
+			if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+				document.documentElement.classList.add('dark');
+			} else {
+				document.documentElement.classList.remove('dark');
+			}
+		},
+		switchTheme: function () {
+			if (!('theme' in localStorage)) {
+				localStorage.theme = 'dark';
+				this.theme = 'dark';
+			} else if (localStorage.theme === 'dark') {
+				localStorage.theme = 'light';
+				this.theme = 'light';
+			} else if (	localStorage.theme === 'light') {
+				localStorage.removeItem('theme');
+				this.theme = 'system';
+			}
+			this.updateDocumentClassTheme();
+		},
+	}`}>
+	<button
+		x-cloak
+		x-show="open"
+		type="button"
+		aria-label="Theme selection"
+		class="group rounded-full bg-gradient-to-b from-zinc-50/50 to-white/90 px-3 py-2 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur transition dark:from-zinc-900/50 dark:to-zinc-800/90 dark:ring-white/10 dark:hover:ring-white/20"
+		@click="switchTheme()">
+		<template x-if="theme === 'light'">
+			<Icon name="fluent:weather-sunny-16-filled" class="w-5 dark:text-white" />
+		</template>
+
+		<template x-if="theme === 'dark'">
+			<Icon name="fluent:weather-moon-16-filled" class="w-5 dark:text-white" />
+		</template>
+
+		<template x-if="theme === 'system'">
+			<Icon name="fluent:dark-theme-20-filled" class="w-5 dark:text-white" />
+		</template>
+	</button>
 </div>
+
+<style>
+	[x-cloak] {
+		display: none !important;
+	}
+</style>
