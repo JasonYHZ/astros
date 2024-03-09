@@ -1,6 +1,4 @@
 ---
-import Link from "@components/ui/link.astro";
-import Button from "@components/ui/button.astro";
 import LanguageSelector from "@components/languageselector.astro";
 import ThemeSelector from "@components/themeselector.astro";
 import { Icon } from "astro-icon";
@@ -15,10 +13,6 @@ export const menuitems = [
 			{ title: "Subitem 2", path: "#" },
 			{ title: "Subitem 3", path: "#" },
 		],
-	},
-	{
-		title: "header.home",
-		path: "/",
 	},
 	{
 		title: "header.pricing",
@@ -42,12 +36,12 @@ export const menuitems = [
 				<div class="relative px-4 sm:px-8 lg:px-12">
 					<div class="mx-auto max-w-2xl lg:max-w-5xl">
 						<div class="relative flex gap-4">
-							<div class="flex flex-1">
+							<div class="flex flex-1 transition md:transition ease-in-out delay-150">
 								<a
 									href={localizePath("/")}
 									class="flex gap-3 items-center text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
 									<Icon name="logo" width="30" class="dark:invert" alt="Logo" />
-									 Astros
+									<span class="hidden md:block">Astros</span>
 								</a>
 							</div>
 							<div class="flex flex-1 justify-center">
@@ -77,7 +71,9 @@ export const menuitems = [
 															x-on:mouseleave="open = false"
 															class="relative block whitespace-nowrap px-3 py-2 transition cursor-pointer"
 															data-path={item.children.map((child) => child.path)}>
-															<span x-bind:class="{'text-lime-600 dark:text-lime-400': isActive}">{t(item.title)}</span>
+															<span x-bind:class="{'text-slate-600 dark:text-slate-400': isActive}">
+																{t(item.title)}
+															</span>
 															<svg
 																fill="currentColor"
 																viewBox="0 0 20 20"
@@ -92,7 +88,7 @@ export const menuitems = [
 
 															<span
 																x-show="isActive"
-																class="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-lime-700/0 via-lime-700/70 to-lime-700/0 dark:from-lime-400/0 dark:via-lime-400/40 dark:to-lime-400/0"
+																class="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-lime-700/0 via-slate-700/70 to-lime-700/0 dark:from-cyan-400/0 dark:via-slate-400/40 dark:to-cyan-400/0"
 															/>
 
 															<div
@@ -122,8 +118,8 @@ export const menuitems = [
 																			document.removeEventListener('astro:page-load', checkPath);
 																			document.addEventListener('astro:page-load', checkPath);
 																		}`}
-																				class="relative block whitespace-nowrap px-3 py-2 transition hover:text-lime-600 dark:hover:text-lime-400"
-																				x-bind:class="{'text-lime-600 dark:text-lime-400': isActive}"
+																				class="relative block whitespace-nowrap px-3 py-2 transition hover:text-slate-600 dark:hover:text-slate-400"
+																				x-bind:class="{'text-slate-600 dark:text-slate-400': isActive}"
 																				data-path={subitem.path}>
 																				{t(subitem.title)}
 																			</a>
@@ -149,14 +145,14 @@ export const menuitems = [
 																document.removeEventListener('astro:page-load', checkPath);
 																document.addEventListener('astro:page-load', checkPath);
 															}`}
-															class="relative block whitespace-nowrap px-3 py-2 transition hover:text-lime-600 dark:hover:text-lime-400"
-															x-bind:class="{'text-lime-600 dark:text-lime-400': isActive}"
+															class="relative block whitespace-nowrap px-3 py-2 transition hover:text-slate-600 dark:hover:text-slate-400"
+															x-bind:class="{'text-slate-600 dark:text-slate-400': isActive}"
 															data-path={item.path}>
 															{t(item.title)}
 
 															<span
 																x-show="isActive"
-																class="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-lime-700/0 via-lime-700/70 to-lime-700/0 dark:from-lime-400/0 dark:via-lime-400/40 dark:to-lime-400/0"
+																class="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-lime-700/0 via-slate-700/70 to-lime-700/0 dark:from-cyan-400/0 dark:via-slate-400/40 dark:to-cyan-400/0"
 															/>
 														</a>
 													</li>
@@ -167,6 +163,112 @@ export const menuitems = [
 								</nav>
 							</div>
 							<div class="flex justify-end gap-3 md:flex-1">
+								<div class="block md:hidden" x-on:click.away="open = false" x-data="{open: false}">
+									<div
+										x-on:click="open = true"
+										class="group flex items-center rounded-full bg-gradient-to-b from-zinc-50/20 to-white/80 px-4 py-2 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur-md focus:outline-none focus-visible:ring-2 dark:from-zinc-900/30 dark:to-zinc-800/80 dark:text-zinc-200 dark:ring-white/10 dark:hover:ring-white/20 dark:focus-visible:ring-yellow-500/80">
+										MENU
+										<svg
+											fill="currentColor"
+											viewBox="0 0 20 20"
+											x-bind:class="{'rotate-180': open, 'rotate-0': !open}"
+											class="inline w-4 h-4 mb-[2px] transition-transform duration-200 transform">
+											<path
+												fill-rule="evenodd"
+												d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+												clip-rule="evenodd">
+											</path>
+										</svg>
+									</div>
+
+									<div
+										x-cloak
+										x-show="open"
+										x-transition:enter="transition ease-out duration-100"
+										x-transition:enter-start="transform opacity-0 scale-95"
+										x-transition:enter-end="transform opacity-100 scale-100"
+										x-transition:leave="transition ease-in duration-75"
+										x-transition:leave-start="transform opacity-100 scale-100"
+										x-transition:leave-end="transform opacity-0 scale-95"
+										class="fixed inset-0 z-50 bg-zinc-800/40 backdrop-blur dark:bg-black/80 opacity-100">
+										<div
+											x-on:click.away="open = false"
+											class="fixed inset-x-4 top-8 z-50 origin-top rounded-3xl bg-gradient-to-b from-zinc-100/75 to-white p-8 ring-1 ring-zinc-900/5 dark:from-zinc-900/50 dark:to-zinc-900 dark:ring-zinc-800 opacity-100 scale-100">
+											<div class="flex flex-row-reverse items-center justify-between">
+												<div aria-label="close menu" class="-m-1 p-1" x-on:click="open = false">
+													<svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 text-zinc-500 dark:text-zinc-400">
+														<path
+															d="m17.25 6.75-10.5 10.5M6.75 6.75l10.5 10.5"
+															fill="none"
+															stroke="currentColor"
+															stroke-width="1.5"
+															stroke-linecap="round"
+															stroke-linejoin="round">
+														</path>
+													</svg>
+												</div>
+												<h2 class="text-sm font-medium text-zinc-600 dark:text-zinc-400">站内导航</h2>
+											</div>
+
+											<nav class="mt-6">
+												<ul
+													class="-my-2 divide-y divide-zinc-500/20 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300">
+													{
+														menuitems.map((item) =>
+															item.children && item.children.length ? (
+																<div x-data="{childOpen: false}">
+																	<div class="py-2 flex justify-between" x-on:click="childOpen = !childOpen">
+																		<span>多级菜单</span>
+																		<svg
+																			fill="currentColor"
+																			viewBox="0 0 20 20"
+																			x-bind:class="{'rotate-180': childOpen, 'rotate-0': !childOpen}"
+																			class="inline w-4 h-4 mb-[2px] transition-transform duration-200 transform">
+																			<path
+																				fill-rule="evenodd"
+																				d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+																				clip-rule="evenodd"
+																			/>
+																		</svg>
+																	</div>
+
+																	<div
+																		x-cloak
+																		x-show="childOpen"
+																		x-transition:enter="transition ease-out duration-100"
+																		x-transition:enter-start="transform opacity-0 scale-95"
+																		x-transition:enter-end="transform opacity-100 scale-100"
+																		x-transition:leave="transition ease-in duration-75"
+																		x-transition:leave-start="transform opacity-100 scale-100"
+																		x-transition:leave-end="transform opacity-0 scale-95"
+																		class="my-3 p-4 divide-y divide-zinc-500/20 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300 rounded-2xl  origin-top  bg-gradient-to-b from-zinc-100/75 to-white ring-1 ring-zinc-900/5 dark:from-zinc-900 dark:to-zinc-900 dark:ring-zinc-800 opacity-100 scale-100">
+																		{item.children.map((subitem) => (
+																			<li>
+																				<a
+																					class="block py-2"
+																					data-headlessui-state="open"
+																					href={localizePath(subitem.path)}>
+																					{t(subitem.title)}
+																				</a>
+																			</li>
+																		))}
+																	</div>
+																</div>
+															) : (
+																<li>
+																	<a class="block py-2" data-headlessui-state="open" href={localizePath(item.path)}>
+																		{t(item.title)}
+																	</a>
+																</li>
+															),
+														)
+													}
+												</ul>
+											</nav>
+										</div>
+									</div>
+								</div>
+
 								<LanguageSelector />
 								<ThemeSelector />
 							</div>

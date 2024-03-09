@@ -17,19 +17,3 @@
 	}
 }
 
-::-moz-selection {
-	color: white;
-	background: black;
-}
-::selection {
-	color: white;
-	background: black;
-}
-.dark ::-moz-selection {
-	color: black;
-	background: white;
-}
-.dark ::selection {
-	color: black;
-	background: white;
-}

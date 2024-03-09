@@ -29,15 +29,14 @@ const { icon = "", languageMapping = { en: "English", it: "Italiano" }, ...rest 
 	x-id="['dropdown-button']"
 	class="relative">
 	<!-- Button -->
-	<button
+	<div
 		x-ref="button"
 		x-on:click="toggle()"
 		:aria-expanded="open"
 		:aria-controls="$id('dropdown-button')"
-		type="button"
 		class="group rounded-full bg-gradient-to-b from-zinc-50/50 to-white/90 px-3 py-2 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur transition dark:from-zinc-900/50 dark:to-zinc-800/90 dark:ring-white/10 dark:hover:ring-white/20">
 		<Icon name="fluent:translate-20-filled" class="w-5 dark:text-white" />
-	</button>
+	</div>
 
 	<!-- Panel -->
 	<div
@@ -50,12 +49,12 @@ const { icon = "", languageMapping = { en: "English", it: "Italiano" }, ...rest 
 		class="absolute left-0 mt-2 w-auto rounded-md bg-transparent bg-gradient-to-b from-zinc-50/50 to-white/90 px-3 py-2 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur transition dark:from-zinc-900/50 dark:to-zinc-800/90 dark:ring-white/10 dark:hover:ring-white/20">
 		<a
 			href={localizePath(pathname, "en")}
-			class="flex items-center gap-2 w-full transition first-of-type:rounded-t-md last-of-type:rounded-b-md px-4 py-2.5 text-left text-sm hover:text-lime-600 dark:hover:text-lime-400 dark:text-white">
+			class="flex items-center gap-2 w-full transition first-of-type:rounded-t-md last-of-type:rounded-b-md px-4 py-2.5 text-left text-sm hover:text-slate-600 dark:hover:text-slate-400 dark:text-white">
 			<span>{currentLanguage === "en" ? "English✓" : "English"}</span>
 		</a>
 		<a
 			href={localizePath(pathname, "it")}
-			class="flex items-center gap-2 w-full transition first-of-type:rounded-t-md last-of-type:rounded-b-md px-4 py-2.5 text-left text-sm hover:text-lime-600 dark:hover:text-lime-400 dark:text-white">
+			class="flex items-center gap-2 w-full transition first-of-type:rounded-t-md last-of-type:rounded-b-md px-4 py-2.5 text-left text-sm hover:text-slate-600 dark:hover:text-slate-400 dark:text-white">
 			<span>{currentLanguage === "it" ? "Italiano✓" : "Italiano"}</span>
 		</a>
 	</div>

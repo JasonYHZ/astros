@@ -32,7 +32,6 @@ const makeTitle = title ? title + " | " + "Astros" : "Astros - Starter Template 
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="theme-color" content="#ffffff" />
 		<HeadHrefLangs />
 
 		<ViewTransitions />
@@ -82,6 +81,23 @@ const makeTitle = title ? title + " | " + "Astros" : "Astros - Starter Template 
 			/* https://css-tricks.com/almanac/properties/c/content-visibility/ */
 			img {
 				content-visibility: auto;
+			}
+
+			::-moz-selection {
+				color: white;
+				background: black;
+			}
+			::selection {
+				color: white;
+				background: black;
+			}
+			.dark ::-moz-selection {
+				color: black;
+				background: white;
+			}
+			.dark ::selection {
+				color: black;
+				background: white;
 			}
 		</style>
 	</body>
